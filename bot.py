@@ -11,7 +11,7 @@ bot = Bot(token=TOKEN)
 enviadas = set()
 
 def noticias():
-    url = f"https://newsapi.org/v2/top-headlines?country=br&q=politica&apiKey={API_KEY}"
+    url = f"https://newsapi.org/v2/everything?q=política&language=pt&sortBy=publishedAt&apiKey={API_KEY}"
 
     print("Buscando notícias...")
 
@@ -25,7 +25,6 @@ def noticias():
     print("Quantidade de notícias:", len(artigos))
 
     return artigos
-
 async def enviar(titulo, link):
     msg = f"🚨 POLÍTICA AGORA\n\n{titulo}\n\nLeia: {link}"
 
