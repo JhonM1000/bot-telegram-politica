@@ -1,5 +1,6 @@
 import requests
 import time
+import asyncio
 from telegram import Bot
 
 TOKEN = "8617007872:AAFkpvHES7F2KSdgvx6kbHA5g_EGMmU9bFU"
@@ -14,22 +15,25 @@ def noticias():
     r = requests.get(url).json()
     return r.get("articles", [])
 
-def enviar(titulo, link):
+async def enviar(titulo, link):
     msg = f"🚨 POLÍTICA AGORA\n\n{titulo}\n\nLeia: {link}"
-    bot.send_message(chat_id=CHAT_ID, text=msg)
+    await bot.send_message(chat_id=CHAT_ID, text=msg)
 
-while True:
-    try:
-        for n in noticias():
-            t = n["title"]
-            l = n["url"]
+async def main():
+    while True:
+        try:
+            for n in noticias():
+                t = n["title"]
+                l = n["url"]
 
-            if t not in enviadas:
-                enviar(t, l)
-                enviadas.add(t)
-                time.sleep(15)
+                if t not in enviadas:
+                    await enviar(t, l)
+                    enviadas.add(t)
+                    time.sleep(15)
 
-    except Exception as e:
-        print(e)
+        except Exception as e:
+            print(e)
 
-    time.sleep(600)
+        time.sleep(600)
+
+asyncio.run(main())
