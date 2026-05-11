@@ -54,8 +54,8 @@ async def main():
 
                     print("Notícia enviada")
 
-                    # espera 30 minutos
-                    await asyncio.sleep(900)
+                    # espera 10 minutos
+                    await asyncio.sleep(600)
 
         except Exception as e:
             print("ERRO:", e)
