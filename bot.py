@@ -62,7 +62,7 @@ async def main():
 
         print("Aguardando próximo ciclo...")
 
-        # verifica novas notícias a cada 10 minutos
-        await asyncio.sleep(600)
+        # verifica novas notícias a cada 15 minutos
+        await asyncio.sleep(900)
 
 asyncio.run(main())
