@@ -12,28 +12,51 @@ enviadas = set()
 
 def noticias():
     url = f"https://newsapi.org/v2/top-headlines?country=br&q=politica&apiKey={API_KEY}"
-    r = requests.get(url).json()
-    return r.get("articles", [])
+
+    print("Buscando notícias...")
+
+    r = requests.get(url)
+    print("Status API:", r.status_code)
+
+    data = r.json()
+
+    artigos = data.get("articles", [])
+
+    print("Quantidade de notícias:", len(artigos))
+
+    return artigos
 
 async def enviar(titulo, link):
     msg = f"🚨 POLÍTICA AGORA\n\n{titulo}\n\nLeia: {link}"
-    await bot.send_message(chat_id=CHAT_ID, text=msg)
+
+    print("Enviando:", titulo)
+
+    await bot.send_message(
+        chat_id=CHAT_ID,
+        text=msg
+    )
 
 async def main():
     while True:
         try:
-            for n in noticias():
+            artigos = noticias()
+
+            for n in artigos:
                 t = n["title"]
                 l = n["url"]
 
                 if t not in enviadas:
                     await enviar(t, l)
                     enviadas.add(t)
-                    time.sleep(15)
+
+                    print("Notícia enviada")
+
+                    await asyncio.sleep(15)
 
         except Exception as e:
-            print(e)
+            print("ERRO:", e)
 
-        time.sleep(600)
+        print("Aguardando próximo ciclo...")
+        await asyncio.sleep(60)
 
 asyncio.run(main())
