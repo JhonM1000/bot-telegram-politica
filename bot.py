@@ -28,6 +28,7 @@ while True:
                 enviar(t, l)
                 enviadas.add(t)
                 time.sleep(15)
+
     except Exception as e:
         print(e)
 
