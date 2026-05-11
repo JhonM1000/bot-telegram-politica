@@ -2,8 +2,7 @@ import requests
 import time
 from telegram import Bot
 
-TOKEN = "
-8617007872:AAFkpvHES7F2KSdgvx6kbHA5g_EGMmU9bFU"
+TOKEN = "8617007872:AAFkpvHES7F2KSdgvx6kbHA5g_EGMmU9bFU"
 CHAT_ID = "@Politica24H"
 API_KEY = "86f017284e7b4ca389537cc1fd7b3932"
 
