@@ -1,11 +1,10 @@
 import requests
-import time
 import asyncio
 from telegram import Bot
 
-TOKEN = "8617007872:AAFkpvHES7F2KSdgvx6kbHA5g_EGMmU9bFU"
+TOKEN = "SEU_TOKEN"
 CHAT_ID = -1003849395765
-API_KEY = "86f017284e7b4ca389537cc1fd7b3932"
+API_KEY = "SUA_API_KEY"
 
 bot = Bot(token=TOKEN)
 enviadas = set()
@@ -25,6 +24,7 @@ def noticias():
     print("Quantidade de notícias:", len(artigos))
 
     return artigos
+
 async def enviar(titulo, link):
     msg = f"🚨 POLÍTICA AGORA\n\n{titulo}\n\nLeia: {link}"
 
@@ -40,22 +40,29 @@ async def main():
         try:
             artigos = noticias()
 
-            for n in artigos:
+            # pega apenas 3 notícias por ciclo
+            for n in artigos[:3]:
+
                 t = n["title"]
                 l = n["url"]
 
                 if t not in enviadas:
+
                     await enviar(t, l)
+
                     enviadas.add(t)
 
                     print("Notícia enviada")
 
-                    await asyncio.sleep(15)
+                    # espera 30 minutos
+                    await asyncio.sleep(900)
 
         except Exception as e:
             print("ERRO:", e)
 
         print("Aguardando próximo ciclo...")
-        await asyncio.sleep(60)
+
+        # verifica novas notícias a cada 10 minutos
+        await asyncio.sleep(600)
 
 asyncio.run(main())
